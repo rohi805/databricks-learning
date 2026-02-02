@@ -1,6 +1,41 @@
+
 version: 2
 
 models:
   - name: bronze_date
     config:
       materialized: view
+
+  - name: bronze_store
+    config:
+      materialized: table
+    columns:
+      - name: store_sk
+        data_tests:
+          - unique
+          - not_null
+
+      - name: store_name
+        data_tests:
+          - accepted_values:
+              values:
+                - MegaMart Manhattan
+                - MegaMart Brooklyn
+                - MegaMart Austin
+                - MegaMart San Jose
+                - MegaMart Toronto
+              config:
+                severity: warn
+
+  - name: bronze_sales
+    columns:
+      - name: gross_amount
+        data_tests:
+          - generic_non_negative
+
+
+
+
+
+
+
